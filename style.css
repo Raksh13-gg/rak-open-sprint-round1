@@ -1,0 +1,109 @@
+ body{
+background:#0f172a;
+color:white;
+font-family:'Poppins',sans-serif;
+text-align:center;
+margin:20px;
+padding:20px;
+border:5px solid #22c55e;
+border-radius:15px;
+}
+
+h1{
+font-family:'Orbitron',sans-serif;
+font-size:42px;
+color:#22c55e;
+}
+
+h3{
+color:#94a3b8;
+}
+
+.container{
+background:#1e293b;
+border-radius:12px;
+padding:25px;
+max-width:700px;
+margin:auto;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:20px;
+}
+
+.camera-box{
+position:relative;
+width:600px;
+height:400px;
+}
+
+#video{
+width:600px;
+height:400px;
+border:4px solid #22c55e;
+border-radius:10px;
+box-shadow:0 0 20px #22c55e;
+}
+
+.scan-line{
+position:absolute;
+width:100%;
+height:4px;
+background:#22c55e;
+box-shadow:0 0 10px #22c55e;
+top:0;
+opacity:0;
+}
+
+@keyframes scan{
+0%{top:0}
+100%{top:396px}
+}
+
+button{
+background:#22c55e;
+color:white;
+border:none;
+padding:12px 25px;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#16a34a;
+transform:scale(1.05);
+}
+
+#progressBar{
+width:80%;
+height:12px;
+background:#475569;
+border-radius:10px;
+overflow:hidden;
+}
+
+#progress{
+height:100%;
+width:0%;
+background:#22c55e;
+transition:width 1s;
+}
+
+#result{
+background:#334155;
+padding:15px;
+border-radius:10px;
+display:none;
+width:90%;
+font-size:18px;
+}
+
+#meme{
+width:350px;
+border-radius:10px;
+display:none;
+box-shadow:0 10px 20px rgba(0,0,0,0.4);
+} 
