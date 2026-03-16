@@ -7,6 +7,20 @@ const beep = document.getElementById("beepSound")
 const scanLine = document.querySelector(".scan-line")
 const whatsappButton = document.getElementById("shareBtn")
 
+/* Load face-api models */
+
+async function loadModels(){
+
+scanButton.disabled = true
+
+await faceapi.nets.tinyFaceDetector.loadFromUri("models")
+
+scanButton.disabled = false
+console.log("Face API models loaded")
+
+}
+window.addEventListener("load", loadModels)
+
 /* Start Webcam */
 
 Webcam.set({
@@ -54,38 +68,25 @@ alert("Sharing not supported on this browser")
 })
 
 /* Face visibility check */
+async function checkFaceVisibility(){
 
-function checkFaceVisibility(){
+const videoElement = document.querySelector("#video video")
 
-Webcam.snap(function(data_uri){
-
-const img = new Image()
-img.src = data_uri
-
-img.onload = function(){
-
-const canvas = document.createElement("canvas")
-const ctx = canvas.getContext("2d")
-
-canvas.width = img.width
-canvas.height = img.height
-
-ctx.drawImage(img,0,0)
-
-const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data
-
-let brightness = 0
-
-for(let i=0;i<pixels.length;i+=4){
-brightness += pixels[i] + pixels[i+1] + pixels[i+2]
+if(!videoElement){
+alert("Camera not ready yet.")
+return
 }
 
-brightness = brightness/(pixels.length/4)/3
+const detection = await faceapi.detectSingleFace(
+videoElement,
+new faceapi.TinyFaceDetectorOptions({inputSize:320})
+)
 
-if(brightness < 60){
+if(!detection){
 
 result.style.display="block"
-result.innerHTML="⚠ Face not visible. Please look at the camera."
+result.innerHTML="⚠ Face not detected. Please look at the camera."
+
 return
 
 }
@@ -94,14 +95,10 @@ startActualScan()
 
 }
 
-})
-
-}
-
 /* Start scanning */
 
 function startActualScan(){
-
+scanButton.disabled = true
 result.style.display="block"
 result.innerHTML=""
 meme.style.display="none"
@@ -182,7 +179,7 @@ roast="🤯 Are you secretly a genius?"
 result.innerHTML += `<p>${roast}</p>`
 
 showMeme()
-
+scanButton.disabled = false
 }
 
 /* Random emotion generator */
